@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Trang chủ" />
+
+    <item
+        android:id="@+id/navigation_trending"
+        android:icon="@drawable/ic_baseline_trending_up_24"
+        android:title="Xu hướng" />
+
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:title="Thông báo" />
+
+    <item
+        android:id="@+id/navigation_personal"
+        android:icon="@drawable/ic_baseline_person_24"
+        android:title="Cá nhân" />
+
+</menu>
