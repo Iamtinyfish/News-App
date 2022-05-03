@@ -6,17 +6,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.mad12.newsapp.ArticleContentActivity;
-import com.mad12.newsapp.MainActivity;
 import com.mad12.newsapp.databinding.FragmentArticleListBinding;
+import com.mad12.newsapp.ui.articleContent.ArticleContentActivity;
 import com.mad12.newsapp.model.Article;
 
 import java.util.List;

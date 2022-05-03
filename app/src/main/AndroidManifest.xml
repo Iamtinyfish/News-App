@@ -13,7 +13,7 @@
         android:theme="@style/Theme.NewsApp"
         android:usesCleartextTraffic="true" >
         <activity
-            android:name=".ArticleContentActivity"
+            android:name=".ui.articleContent.ArticleContentActivity"
             android:exported="false"
             android:label=""
             />
