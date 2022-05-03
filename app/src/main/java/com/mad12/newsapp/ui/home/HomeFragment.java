@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -14,12 +12,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.mad12.newsapp.R;
 import com.mad12.newsapp.databinding.FragmentHomeBinding;
-import com.mad12.newsapp.model.Article;
 import com.mad12.newsapp.model.Category;
 
-import java.util.List;
 import java.util.ListIterator;
 
 public class HomeFragment extends Fragment {

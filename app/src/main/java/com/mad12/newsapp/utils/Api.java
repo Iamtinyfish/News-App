@@ -3,10 +3,13 @@ package com.mad12.newsapp.utils;
 import retrofit2.Call;
 import retrofit2.http.GET;
 
-import com.mad12.newsapp.model.Categories;
+import com.mad12.newsapp.model.Category;
+
+import java.util.List;
 
 public interface Api {
     public static final String BASE_URL = "https://mad-android-thanhpc.herokuapp.com/";
+//    public static final String BASE_URL = "http://10.0.2.2:3000/"; //localhost
     @GET("category/")
-    Call<Categories> getAllCategory();
+    Call<List<Category>> getAllCategory();
 }

@@ -12,7 +12,7 @@ public class Category {
     @SerializedName("slug")
     private String slug;
     @SerializedName("articles")
-    private List<ArticleId> articleIds;
+    private List<Article> articles;
 
     public String getId() {
         return id;
@@ -38,11 +38,11 @@ public class Category {
         this.slug = slug;
     }
 
-    public List<ArticleId> getArticles() {
-        return articleIds;
+    public List<Article> getArticles() {
+        return articles;
     }
 
-    public void setArticles(List<ArticleId> articleIds) {
-        this.articleIds = articleIds;
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
     }
 }

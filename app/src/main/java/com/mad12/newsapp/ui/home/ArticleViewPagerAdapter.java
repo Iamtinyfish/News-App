@@ -1,14 +1,12 @@
 package com.mad12.newsapp.ui.home;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.mad12.newsapp.model.ArticleId;
+import com.mad12.newsapp.model.Article;
 import com.mad12.newsapp.model.Category;
 import com.mad12.newsapp.ui.articleList.ArticleListFragment;
 
@@ -17,7 +15,7 @@ import java.util.List;
 
 public class ArticleViewPagerAdapter extends FragmentStatePagerAdapter {
     private List<Category> categoriesData;
-    private List<ArticleId> allArticles;
+    private List<Article> allArticles;
 
     public ArticleViewPagerAdapter(@NonNull FragmentManager fm, int behavior, List<Category> categoriesData) {
         super(fm, behavior);
@@ -27,11 +25,11 @@ public class ArticleViewPagerAdapter extends FragmentStatePagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        List<ArticleId> articles = new ArrayList<>();
+        List<Article> articles = new ArrayList<>();
         if (position == 0) {
             if (allArticles == null) {
                 for (Category category : categoriesData) {
-                    for (ArticleId article : category.getArticles()) {
+                    for (Article article : category.getArticles()) {
                         articles.add(article);
                     }
                 }
@@ -43,8 +41,7 @@ public class ArticleViewPagerAdapter extends FragmentStatePagerAdapter {
             articles = categoriesData.get(position - 1).getArticles();
         }
 
-        ArticleListFragment articleListFragment = new ArticleListFragment(articles);
-        return articleListFragment;
+        return new ArticleListFragment(articles);
     }
 
     @Override

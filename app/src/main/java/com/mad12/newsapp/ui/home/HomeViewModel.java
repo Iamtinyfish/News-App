@@ -11,7 +11,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.mad12.newsapp.model.Categories;
 import com.mad12.newsapp.utils.RetrofitClient;
 
 import java.util.List;
@@ -35,18 +34,18 @@ public class HomeViewModel extends ViewModel {
 
     //Call API
     private void getCategoriesFromAPI() {
-        Call<Categories> call = RetrofitClient.getInstance().getMyApi().getAllCategory();
-        Log.println(Log.DEBUG,"url", call.request().url().toString());
-        call.enqueue(new Callback<Categories>() {
+        Call<List<Category>> call = RetrofitClient.getInstance().getMyApi().getAllCategory();
+//        Log.println(Log.DEBUG,"url", call.request().url().toString());
+        call.enqueue(new Callback<List<Category>>() {
             @Override
-            public void onResponse(Call<Categories> call, Response<Categories> response) {
-                categoriesData.setValue(response.body().getData());
-                Log.println(Log.DEBUG,"status", (categoriesData != null) ? categoriesData.getValue().toString() : "null");
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                categoriesData.setValue(response.body());
+//                Log.println(Log.DEBUG,"categoriesData", (categoriesData != null) ? categoriesData.getValue().toString() : "null");
             }
 
             @Override
-            public void onFailure(Call<Categories> call, Throwable t) {
-                Log.println(Log.DEBUG,"status", t.toString());
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+                Log.println(Log.DEBUG,"error call api", t.toString());
             }
         });
     }
