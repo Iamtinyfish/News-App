@@ -6,8 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.mad12.newsapp.MainActivity;
@@ -23,11 +25,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     ActivityArticleContentBinding binding;
     ListView listView;
     private String key = null;
+    private SearchView searchView;
+    private TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +47,25 @@ public class SearchActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         listView = findViewById(R.id.listView);
         key = getIntent().getStringExtra("key");
         getCategoryByKey(key);
+
+        textView = findViewById(R.id.searchBtn);
+        searchView = (SearchView) findViewById(R.id.searchView);
+        searchView.setQuery(key,false);
+        searchView.setOnQueryTextListener(SearchActivity.this);
+
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String key = searchView.getQuery().toString();
+                if(key.trim().length() != 0){
+                    getCategoryByKey(key);
+                }
+            }
+        });
     }
 
     //Call API
@@ -81,5 +101,15 @@ public class SearchActivity extends AppCompatActivity {
                 Log.println(Log.DEBUG,"error call api", t.toString());
             }
         });
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 }

@@ -62,10 +62,9 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             public void onClick(View view) {
                 String key = searchView.getQuery().toString();
                 if(key.trim().length() != 0){
-                Intent i = new Intent(MainActivity.this, SearchActivity.class);
-                i.putExtra("key", key);
-
-                startActivity(i);
+                    Intent i = new Intent(MainActivity.this, SearchActivity.class);
+                    i.putExtra("key", key);
+                    startActivity(i);
                 }
             }
         });
