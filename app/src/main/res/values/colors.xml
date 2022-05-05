@@ -9,7 +9,10 @@
     <color name="orange_700">#c2410c</color>
     <color name="orange_800">#9a3412</color>
     <color name="orange_900">#7c2d12</color>
+    <color name="day_em_color">#fff1f1f1</color>
+    <color name="day_list_divider_gray">#ffdddddd</color>
 
+    <color name="transparent">#00000000</color>
     <color name="red_100">#fee2e2</color>
     <color name="red_200">#fecaca</color>
     <color name="red_300">#fca5a5</color>

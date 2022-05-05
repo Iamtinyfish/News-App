@@ -24,6 +24,7 @@ public class ArticleListFragment extends Fragment {
     private List<Article> articles;
 
     public ArticleListFragment(List<Article> articles) {
+
         this.articles = articles;
     }
 

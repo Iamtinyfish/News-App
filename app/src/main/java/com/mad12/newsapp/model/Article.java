@@ -16,6 +16,12 @@ public class Article {
 
     private LocalDateTime publishedAt;
 
+    public Article(String s, String s1, String s2) {
+        this.title=s;
+        this.img=s1;
+        this.content=s2;
+    }
+
     public String getId() {
         return id;
     }

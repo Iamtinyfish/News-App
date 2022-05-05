@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/searchView">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_margin_inner_recyclerView"
+            android:layout_marginBottom="@dimen/item_margin_inner_recyclerView"
+            android:orientation="horizontal"
+            android:weightSum="10.0">
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/item_margin_inner_recyclerView"
+                android:layout_marginRight="@dimen/item_margin_inner_recyclerView"
+                android:layout_weight="7.5"
+                android:background="@drawable/background_edittext"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                app:defaultQueryHint="@string/search"
+                app:iconifiedByDefault="false"
+                app:queryBackground="@color/transparent"
+                app:searchHintIcon="@null"
+                app:searchIcon="@null"
+                app:submitBackground="@color/transparent" />
+
+            <TextView
+                android:id="@+id/searchBtn"
+                android:layout_width="0.0dip"
+                android:layout_height="fill_parent"
+                android:layout_weight="2.5"
+                android:gravity="center"
+                android:text="Tìm"
+                android:textColor="?textColorAlertDialogListItem"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+</RelativeLayout>

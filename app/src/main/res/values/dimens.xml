@@ -6,4 +6,7 @@
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="item_margin_inner_recyclerView">8.0dip</dimen>
+    <dimen name="item_margin_recyclerView">16.0dip</dimen>
+
 </resources>

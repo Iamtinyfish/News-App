@@ -36,7 +36,9 @@ public class ArticleListAdapter extends ArrayAdapter<Article> {
         ImageView articleImg = convertView.findViewById(R.id.article_img);
         TextView articleTitle = convertView.findViewById(R.id.article_title);
 
-        Picasso.get().load(article.getImg()).into(articleImg);
+        if(article.getImg() != null && !article.getImg().isEmpty()){
+            Picasso.get().load(article.getImg()).into(articleImg);
+        }
         articleTitle.setText(article.getTitle());
 
         return convertView;

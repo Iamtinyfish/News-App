@@ -6,7 +6,8 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Cài đặt</string>
-
+    <string name="search">Tìm kiếm theo tiêu đề tin tức...</string>
+    <string name="search_action">Tìm</string>
     <string name="menu_home">Trang chủ</string>
     <string name="menu_bookmark">Đã lưu</string>
     <string name="menu_about">Về chúng tôi</string>

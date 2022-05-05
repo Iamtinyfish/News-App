@@ -3,6 +3,7 @@ package com.mad12.newsapp.utils;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 import com.mad12.newsapp.model.Article;
 import com.mad12.newsapp.model.Category;
@@ -17,4 +18,7 @@ public interface Api {
 
     @GET("article/id/{id}")
     Call<Article> getArticleById(@Path("id") String id);
+
+    @GET("article/search")
+    Call<List<Article>> getCategoryByKey(@Query("title") String key);
 }

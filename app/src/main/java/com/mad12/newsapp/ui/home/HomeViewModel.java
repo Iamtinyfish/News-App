@@ -25,6 +25,7 @@ public class HomeViewModel extends ViewModel {
     }
 
     public LiveData<List<Category>> getCategoriesLiveData() {
+
         return categoriesData;
     }
 

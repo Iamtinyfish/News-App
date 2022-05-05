@@ -13,6 +13,13 @@
         android:theme="@style/Theme.NewsApp"
         android:usesCleartextTraffic="true" >
         <activity
+            android:name=".ui.search.SearchActivity"
+            android:exported="false"
+            android:theme="@style/Theme.NewsApp.NoActionBar"
+            android:label=""
+            android:parentActivityName=".MainActivity"
+            />
+        <activity
             android:name=".ui.articleContent.ArticleContentActivity"
             android:exported="false"
             android:label=""
