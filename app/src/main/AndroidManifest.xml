@@ -22,6 +22,7 @@
         <activity
             android:name=".ui.articleContent.ArticleContentActivity"
             android:exported="false"
+            android:theme="@style/Theme.NewsApp.NoActionBar"
             android:label=""
             />
 
