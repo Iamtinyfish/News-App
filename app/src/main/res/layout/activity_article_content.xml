@@ -25,10 +25,15 @@
             android:id="@+id/title_toolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tieu de"
+            android:text=""
             android:paddingLeft="2dp"
             android:layout_gravity="center"/>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@drawable/ic_baseline_more_vert_24"/>
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
@@ -87,6 +92,8 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <include layout="@layout/navigation_bottom"/>
+    <include
+        layout="@layout/navigation_bottom"
+        tools:layout_editor_absoluteX="17dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

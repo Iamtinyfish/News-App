@@ -2,6 +2,7 @@ package com.mad12.newsapp.ui.articleContent;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,8 +30,8 @@ import retrofit2.Response;
 public class ArticleContentActivity extends AppCompatActivity {
 
     ActivityArticleContentBinding binding;
-    private TextView articleTitle, articleContent;
-    private ImageView articleImg;
+    private TextView articleTitle, articleContent, title_toolbar;
+    private ImageView articleImg, share;
     private ScrollView scrollView;
 
     @Override
@@ -72,11 +73,28 @@ public class ArticleContentActivity extends AppCompatActivity {
                 articleTitle = findViewById(R.id.article_title);
                 articleContent = findViewById(R.id.article_content);
                 articleImg = findViewById(R.id.article_img);
+                title_toolbar = findViewById(R.id.title_toolbar);
 
                 // set value for article
+                title_toolbar.setText(response.body().getCategory());
                 articleTitle.setText(response.body().getTitle());
                 articleContent.setText(response.body().getContent());
                 Picasso.get().load(response.body().getImg()).into(articleImg);
+
+                //share
+                share = findViewById(R.id.share);
+                share.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Article article = response.body();
+                        Intent share = new Intent(Intent.ACTION_SEND);
+                        share.setType("text/plain");
+                        share.putExtra(Intent.EXTRA_TEXT, article.getTitle());
+                        share.putExtra(Intent.EXTRA_TEXT, article.getImg());
+                        share.putExtra(Intent.EXTRA_TEXT, article.getContent());
+                        startActivity(Intent.createChooser(share, "Title of the dialog the system will open"));
+                    }
+                });
             }
 
             @Override
