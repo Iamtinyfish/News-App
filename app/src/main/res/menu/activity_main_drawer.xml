@@ -2,7 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
@@ -12,6 +11,10 @@
             android:id="@+id/nav_bookmark"
             android:icon="@drawable/ic_baseline_bookmark_24"
             android:title="@string/menu_bookmark" />
+        <item
+            android:id="@+id/nav_personal"
+            android:icon="@drawable/ic_baseline_person_24"
+            android:title="@string/menu_personal" />
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_baseline_info_24"

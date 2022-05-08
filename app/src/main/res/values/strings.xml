@@ -11,6 +11,8 @@
     <string name="menu_home">Trang chủ</string>
     <string name="menu_bookmark">Đã lưu</string>
     <string name="menu_about">Về chúng tôi</string>
+    <string name="menu_personal">Cá nhân</string>
+    <string name="menu_notification">Thông báo</string>
     <string name="categories_bar">categories</string>
     <string name="navigation_bottom_text">Viết bình luận...</string>
     <string name="view_by_category">view_by_category</string>

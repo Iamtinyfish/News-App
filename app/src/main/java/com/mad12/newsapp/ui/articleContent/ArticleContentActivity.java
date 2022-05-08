@@ -10,9 +10,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 
 import com.mad12.newsapp.MainActivity;
@@ -31,8 +33,7 @@ public class ArticleContentActivity extends AppCompatActivity {
 
     ActivityArticleContentBinding binding;
     private TextView articleTitle, articleContent, title_toolbar;
-    private ImageView articleImg, share;
-    private ScrollView scrollView;
+    private ImageView articleImg, share, img_report;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class ArticleContentActivity extends AppCompatActivity {
         binding = ActivityArticleContentBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_article_content);
 
+        //back
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,6 +59,24 @@ public class ArticleContentActivity extends AppCompatActivity {
         if (intent != null) articleId = intent.getStringExtra("article_id");
         getArticleById(articleId);
 
+        //add menu report
+        img_report = findViewById(R.id.img_report);
+        img_report.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu pm = new PopupMenu(ArticleContentActivity.this, img_report);
+                pm.getMenuInflater().inflate(R.menu.nav_top, pm.getMenu());
+                pm.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Toast.makeText(ArticleContentActivity.this, "", Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                });
+                pm.setForceShowIcon(true);
+                pm.show();
+            }
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -103,4 +123,5 @@ public class ArticleContentActivity extends AppCompatActivity {
             }
         });
     }
+
 }

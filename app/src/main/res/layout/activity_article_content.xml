@@ -30,10 +30,13 @@
             android:layout_gravity="center"/>
 
         <ImageView
+            android:id="@+id/img_report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:background="@drawable/ic_baseline_more_vert_24"/>
+            android:background="@drawable/ic_baseline_more_vert_24">
+
+        </ImageView>
     </androidx.appcompat.widget.Toolbar>
 
     <ScrollView

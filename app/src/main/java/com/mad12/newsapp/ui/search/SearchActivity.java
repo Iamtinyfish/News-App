@@ -31,7 +31,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
     ListView listView;
     private String key = null;
     private SearchView searchView;
-    private TextView textView;
+    private TextView textView, noResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +77,19 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
             public void onResponse(Call<List<Article>> call, Response<List<Article>> response) {
 
                 if(response.body() != null){
-                    SearchListAdapter adapter = new SearchListAdapter(SearchActivity.this,R.layout.article_item, response.body());
-
-                    if(listView != null) {
+                    //no result
+                    noResult = findViewById(R.id.tex_no_search);
+                    if(response.body().size() == 0){
+                        noResult.setVisibility(View.VISIBLE);
+                        listView.setVisibility(View.GONE);
+                        noResult.setText("Không có dữ liệu");
+                    }
+                    else{
+                        noResult.setVisibility(View.GONE);
+                        listView.setVisibility(View.VISIBLE);
+                        SearchListAdapter adapter = new SearchListAdapter(SearchActivity.this,R.layout.article_item, response.body());
                         listView.setAdapter(adapter);
-
+                        Log.v("v",String.valueOf(response.body().size()));
                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -92,7 +100,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
                         });
                     }
                 }else{
-                    Log.v("d","error call api");
+                    Log.v("v","error call api");
                 }
             }
 

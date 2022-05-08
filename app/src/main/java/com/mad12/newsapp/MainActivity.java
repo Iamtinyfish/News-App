@@ -2,6 +2,8 @@ package com.mad12.newsapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mad12.newsapp.databinding.ActivityMainBinding;
+import com.mad12.newsapp.ui.notification.NotificationActivity;
 import com.mad12.newsapp.ui.search.SearchActivity;
 
 public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
@@ -46,9 +49,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_bookmark, R.id.nav_about)
+                R.id.nav_home, R.id.nav_bookmark, R.id.nav_about, R.id.nav_personal)
                 .setOpenableLayout(drawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
@@ -76,7 +80,17 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_notification:
+                Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
+                startActivity(intent);
+                Log.v("v","Log this");
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
