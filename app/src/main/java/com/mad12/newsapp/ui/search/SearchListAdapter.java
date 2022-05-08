@@ -2,6 +2,7 @@ package com.mad12.newsapp.ui.search;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,19 +15,27 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 
 import com.mad12.newsapp.R;
 import com.mad12.newsapp.databinding.ActivityArticleContentBinding;
 import com.mad12.newsapp.model.Article;
+import com.mad12.newsapp.model.Category;
+import com.mad12.newsapp.utils.RetrofitClient;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SearchListAdapter extends BaseAdapter {
 
     private Context context;
     private int resAnInt;
     private List<Article> list;
+    private final String slug = null;
 
     public SearchListAdapter(Context context, int resAnInt, List<Article> list) {
         this.context = context;
@@ -55,9 +64,11 @@ public class SearchListAdapter extends BaseAdapter {
         convertView = LayoutInflater.from(context).inflate(resAnInt,parent,false);
         ImageView articleImg = convertView.findViewById(R.id.article_img);
         TextView articleTitle = convertView.findViewById(R.id.article_title);
+        TextView articleCategory = convertView.findViewById(R.id.article_category);
 
         Picasso.get().load(list.get(position).getImg()).into(articleImg);
         articleTitle.setText(list.get(position).getTitle());
+        articleCategory.setText(list.get(position).getCategory());
 
         return convertView;
     }

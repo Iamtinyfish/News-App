@@ -30,6 +30,7 @@ public class ArticleViewPagerAdapter extends FragmentStatePagerAdapter {
             if (allArticles == null) {
                 for (Category category : categoriesData) {
                     for (Article article : category.getArticles()) {
+                        article.setCategory(category.getName());
                         articles.add(article);
                     }
                 }

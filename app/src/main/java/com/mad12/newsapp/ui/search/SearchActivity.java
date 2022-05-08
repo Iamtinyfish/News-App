@@ -3,6 +3,7 @@ package com.mad12.newsapp.ui.search;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -16,9 +17,11 @@ import com.mad12.newsapp.MainActivity;
 import com.mad12.newsapp.R;
 import com.mad12.newsapp.databinding.ActivityArticleContentBinding;
 import com.mad12.newsapp.model.Article;
+import com.mad12.newsapp.model.Category;
 import com.mad12.newsapp.ui.articleContent.ArticleContentActivity;
 import com.mad12.newsapp.utils.RetrofitClient;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -29,7 +32,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
 
     ActivityArticleContentBinding binding;
     ListView listView;
-    private String key = null;
+    private String key = null, slug = null;
     private SearchView searchView;
     private TextView textView, noResult;
 
@@ -38,6 +41,8 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
         super.onCreate(savedInstanceState);
         binding = ActivityArticleContentBinding.inflate(getLayoutInflater());
         setContentView(R.layout.search_result);
+
+        //back
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +55,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
 
         listView = findViewById(R.id.listView);
         key = getIntent().getStringExtra("key");
-        getCategoryByKey(key);
+        getArticlesByKey(key);
 
         textView = findViewById(R.id.searchBtn);
         searchView = (SearchView) findViewById(R.id.searchView);
@@ -60,41 +65,40 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String key = searchView.getQuery().toString();
                 if(key.trim().length() != 0){
-                    getCategoryByKey(key);
+                    getArticlesByKey(key);
                 }
             }
         });
     }
 
     //Call API
-    private void getCategoryByKey(String key) {
-
-        Call<List<Article>> call = RetrofitClient.getInstance().getMyApi().getCategoryByKey(key);
+    private void getArticlesByKey(String key) {
+        Call<List<Article>> call = RetrofitClient.getInstance().getMyApi().getArticlesByKey(key);
         call.enqueue(new Callback<List<Article>>() {
             @Override
             public void onResponse(Call<List<Article>> call, Response<List<Article>> response) {
-
                 if(response.body() != null){
                     //no result
-                    noResult = findViewById(R.id.tex_no_search);
+                    noResult = findViewById(R.id.text_no_search);
                     if(response.body().size() == 0){
                         noResult.setVisibility(View.VISIBLE);
                         listView.setVisibility(View.GONE);
-                        noResult.setText("Không có dữ liệu");
+                        noResult.setText("Không có dữ liệu hiển thị");
                     }
                     else{
                         noResult.setVisibility(View.GONE);
                         listView.setVisibility(View.VISIBLE);
                         SearchListAdapter adapter = new SearchListAdapter(SearchActivity.this,R.layout.article_item, response.body());
                         listView.setAdapter(adapter);
-                        Log.v("v",String.valueOf(response.body().size()));
                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                                 Intent intent = new Intent(SearchActivity.this, ArticleContentActivity.class);
                                 intent.putExtra("article_id", response.body().get(position).getId());
+
                                 startActivity(intent);
                             }
                         });
@@ -110,6 +114,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
             }
         });
     }
+
 
     @Override
     public boolean onQueryTextSubmit(String query) {

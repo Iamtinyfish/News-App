@@ -32,7 +32,7 @@ import retrofit2.Response;
 public class ArticleContentActivity extends AppCompatActivity {
 
     ActivityArticleContentBinding binding;
-    private TextView articleTitle, articleContent, title_toolbar;
+    private TextView articleTitle, articleContent, title_toolbar,article_category;
     private ImageView articleImg, share, img_report;
 
     @Override
@@ -47,8 +47,8 @@ public class ArticleContentActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ArticleContentActivity.this, MainActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(ArticleContentActivity.this, MainActivity.class);
+//                startActivity(intent);
                 finish();
             }
         });
@@ -94,12 +94,14 @@ public class ArticleContentActivity extends AppCompatActivity {
                 articleContent = findViewById(R.id.article_content);
                 articleImg = findViewById(R.id.article_img);
                 title_toolbar = findViewById(R.id.title_toolbar);
+                article_category = findViewById(R.id.article_category);
 
                 // set value for article
                 title_toolbar.setText(response.body().getCategory());
                 articleTitle.setText(response.body().getTitle());
                 articleContent.setText(response.body().getContent());
                 Picasso.get().load(response.body().getImg()).into(articleImg);
+                article_category.setText(response.body().getCategory());
 
                 //share
                 share = findViewById(R.id.share);

@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 
 import com.mad12.newsapp.R;
 import com.mad12.newsapp.model.Article;
+import com.mad12.newsapp.model.Category;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -35,11 +36,14 @@ public class ArticleListAdapter extends ArrayAdapter<Article> {
 
         ImageView articleImg = convertView.findViewById(R.id.article_img);
         TextView articleTitle = convertView.findViewById(R.id.article_title);
+        TextView articleCategory = convertView.findViewById(R.id.article_category);
+
 
         if(article.getImg() != null && !article.getImg().isEmpty()){
             Picasso.get().load(article.getImg()).into(articleImg);
         }
         articleTitle.setText(article.getTitle());
+        articleCategory.setText(article.getCategory());
 
         return convertView;
     }

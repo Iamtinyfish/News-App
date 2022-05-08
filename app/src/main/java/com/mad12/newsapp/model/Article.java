@@ -71,6 +71,10 @@ public class Article {
         return category;
     }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         return "Article{" +
