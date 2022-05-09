@@ -1,12 +1,7 @@
 package com.mad12.newsapp.model;
 
-import androidx.annotation.NonNull;
-
-import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
-
-import java.lang.annotation.Inherited;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Article {
     @SerializedName("_id")
@@ -17,7 +12,8 @@ public class Article {
     private String img;
     @SerializedName("content")
     private String content;
-    private LocalDateTime publishedAt;
+    @SerializedName("timestamps")
+    private Date timestamps;
     @SerializedName("category")
     private String category;
 
@@ -51,12 +47,12 @@ public class Article {
         this.img = img;
     }
 
-    public LocalDateTime getPublishedAt() {
-        return publishedAt;
+    public Date getTimestamps() {
+        return timestamps;
     }
 
-    public void setPublishedAt(LocalDateTime publishedAt) {
-        this.publishedAt = publishedAt;
+    public void setTimestamps(Date timestamps) {
+        this.timestamps = timestamps;
     }
 
     public String getContent() {
@@ -82,7 +78,7 @@ public class Article {
                 ", title='" + title + '\'' +
                 ", img='" + img + '\'' +
                 ", content='" + content + '\'' +
-                ", publishedAt=" + publishedAt +
+                ", timestamps=" + timestamps +
                 '}';
     }
 
