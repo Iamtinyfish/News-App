@@ -24,6 +24,8 @@ import com.mad12.newsapp.model.Category;
 import com.mad12.newsapp.utils.RetrofitClient;
 import com.squareup.picasso.Picasso;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -35,7 +37,7 @@ public class SearchListAdapter extends BaseAdapter {
     private Context context;
     private int resAnInt;
     private List<Article> list;
-    private final String slug = null;
+    private PrettyTime p = new PrettyTime();
 
     public SearchListAdapter(Context context, int resAnInt, List<Article> list) {
         this.context = context;
@@ -65,10 +67,12 @@ public class SearchListAdapter extends BaseAdapter {
         ImageView articleImg = convertView.findViewById(R.id.article_img);
         TextView articleTitle = convertView.findViewById(R.id.article_title);
         TextView articleCategory = convertView.findViewById(R.id.article_category);
+        TextView articleDate = convertView.findViewById(R.id.article_date);
 
         Picasso.get().load(list.get(position).getImg()).into(articleImg);
         articleTitle.setText(list.get(position).getTitle());
         articleCategory.setText(list.get(position).getCategory());
+        articleDate.setText(p.format(list.get(position).getTimestamps()));
 
         return convertView;
     }

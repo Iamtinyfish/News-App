@@ -1,13 +1,17 @@
 package com.mad12.newsapp.utils;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Headers;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 import com.mad12.newsapp.model.Article;
 import com.mad12.newsapp.model.Category;
+import com.mad12.newsapp.model.User;
 
 import java.util.List;
 
@@ -20,9 +24,9 @@ public interface Api {
     @GET("article/id/{id}")
     Call<Article> getArticleById(@Path("id") String id);
 
-    @GET("category/slug")
-    Call<String> getCategoryBySlug(@Query("slug") String slug);
-
     @GET("article/search")
     Call<List<Article>> getArticlesByKey(@Query("title") String key);
+
+    @POST("login")
+    Call<User> checkLogin(@Body User user);
 }

@@ -1,12 +1,16 @@
 package com.mad12.newsapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -19,6 +23,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.mad12.newsapp.databinding.ActivityMainBinding;
+import com.mad12.newsapp.ui.articleContent.ArticleContentActivity;
+import com.mad12.newsapp.ui.login.LoginActivity;
 import com.mad12.newsapp.ui.notification.NotificationActivity;
 import com.mad12.newsapp.ui.search.SearchActivity;
 
@@ -27,7 +33,10 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private SearchView searchView;
-    private TextView textView;
+    private TextView textView, textUsername;
+    private String username = null;
+    private Button logout;
+    private boolean Login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 }
             }
         });
+
     }
 
     @Override
@@ -86,7 +96,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
             case R.id.nav_notification:
                 Intent intent = new Intent(MainActivity.this, NotificationActivity.class);
                 startActivity(intent);
-                Log.v("v","Log this");
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -94,9 +103,54 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+
+        logout = findViewById(R.id.btnLogout);
+        textUsername = findViewById(R.id.txtusername);
+        //set username text
+        username = sharedPref.getString("Fullname", "");
+        if(!username.isEmpty()) {
+            textUsername.setText(username);
+            logout.setText("Đăng xuất");
+        }else{
+            textUsername.setText("News App");
+        }
+
+        //set logout button
+        Login = sharedPref.getBoolean("Login", false);
+        if(!Login){
+            logout.setText("Đăng nhập");
+        }
+        else{
+            logout.setText("Đăng xuất");
+            logout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SharedPreferences.Editor editor= sharedPref.edit();
+                    editor.clear();
+                    editor.commit();
+                    Toast.makeText(MainActivity.this,"Logout Success", Toast.LENGTH_LONG);
+                    textUsername.setText("News App");
+                    logout.setText("Đăng nhập");
+                }
+            });
+        }
+
+        if(logout.getText().equals("Đăng nhập")){
+            logout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 
     @Override
     public boolean onQueryTextSubmit(String s) {
@@ -107,4 +161,5 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     public boolean onQueryTextChange(String s) {
         return false;
     }
+
 }

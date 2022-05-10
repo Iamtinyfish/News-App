@@ -14,15 +14,19 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <TextView
-                android:layout_width="wrap_content"
+
+            <EditText
+                android:id="@+id/comment"
+                android:layout_width="300dp"
                 android:layout_height="match_parent"
+                android:background="@android:color/transparent"
                 android:gravity="left|center"
-                android:text="@string/navigation_bottom_text"
-                android:textSize="12dp"
-                android:textColor="@color/gray_400"/>
+                android:hint="@string/navigation_bottom_text"
+                android:textColor="@color/gray_400"
+                android:textSize="18dp" />
 
             <RelativeLayout
+                android:id="@+id/layout1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|center"
@@ -44,6 +48,7 @@
                     android:textSize="10dp" />
             </RelativeLayout>
             <RelativeLayout
+                android:id="@+id/layout2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -60,10 +65,21 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="28dp"
                     android:text="Chia sẻ"
-                    android:textSize="10dp"
                     android:textAlignment="center"
-                    android:textAllCaps="false"/>
+                    android:textAllCaps="false"
+                    android:textSize="10dp" />
+
             </RelativeLayout>
+            <TextView
+                android:id="@+id/sendComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="20dp"
+                android:visibility="invisible"
+                android:textStyle="bold"
+                android:text="Gửi"/>
+
         </FrameLayout>
 
     </androidx.appcompat.widget.Toolbar>

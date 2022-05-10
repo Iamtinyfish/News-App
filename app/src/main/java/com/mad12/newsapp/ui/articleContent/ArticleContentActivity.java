@@ -1,29 +1,42 @@
 package com.mad12.newsapp.ui.articleContent;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ScrollView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 
-import com.mad12.newsapp.MainActivity;
 import com.mad12.newsapp.R;
 import com.mad12.newsapp.databinding.ActivityArticleContentBinding;
 import com.mad12.newsapp.model.Article;
-import com.mad12.newsapp.ui.search.SearchActivity;
+import com.mad12.newsapp.ui.login.LoginActivity;
 import com.mad12.newsapp.utils.RetrofitClient;
 import com.squareup.picasso.Picasso;
+
+import java.text.SimpleDateFormat;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,8 +45,11 @@ import retrofit2.Response;
 public class ArticleContentActivity extends AppCompatActivity {
 
     ActivityArticleContentBinding binding;
-    private TextView articleTitle, articleContent, title_toolbar,article_category;
+    private TextView articleTitle, articleContent, title_toolbar, article_category, article_date;
+    EditText comment;
     private ImageView articleImg, share, img_report;
+    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+    private boolean Login;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +57,46 @@ public class ArticleContentActivity extends AppCompatActivity {
 
         binding = ActivityArticleContentBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_article_content);
+
+        final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(ArticleContentActivity.this);
+
+        //hide keyboard when click on Screen
+        findViewById(R.id.scrollView).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                findViewById(R.id.sendComment).setVisibility(View.GONE);
+                findViewById(R.id.layout1).setVisibility(View.VISIBLE);
+                findViewById(R.id.layout2).setVisibility(View.VISIBLE);
+                hideKeyboard(view);
+                return false;
+            }
+        });
+
+        //handle comment
+        comment = findViewById(R.id.comment);
+        comment.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
+                findViewById(R.id.sendComment).setVisibility(View.VISIBLE);
+                findViewById(R.id.layout1).setVisibility(View.GONE);
+                findViewById(R.id.layout2).setVisibility(View.GONE);
+
+                findViewById(R.id.sendComment).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Login = sharedPref.getBoolean("Login", false);
+                        if(!Login){
+                            Intent intent = new Intent(ArticleContentActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                        }
+                        else{
+                            System.out.println(comment.getText());
+                        }
+                    }
+                });
+                return false;
+            }
+        });
 
         //back
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -54,7 +110,7 @@ public class ArticleContentActivity extends AppCompatActivity {
         });
 
         //get article id from intent
-        Intent intent = this.getIntent();
+         Intent intent = this.getIntent();
         String articleId = null;
         if (intent != null) articleId = intent.getStringExtra("article_id");
         getArticleById(articleId);
@@ -79,8 +135,17 @@ public class ArticleContentActivity extends AppCompatActivity {
         });
     }
 
+    public void showToastDown(Context context, String message) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+    }
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
+    }
+
+    //hide keyboard
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     //Call API
@@ -95,6 +160,7 @@ public class ArticleContentActivity extends AppCompatActivity {
                 articleImg = findViewById(R.id.article_img);
                 title_toolbar = findViewById(R.id.title_toolbar);
                 article_category = findViewById(R.id.article_category);
+                article_date = findViewById(R.id.article_date);
 
                 // set value for article
                 title_toolbar.setText(response.body().getCategory());
@@ -102,6 +168,7 @@ public class ArticleContentActivity extends AppCompatActivity {
                 articleContent.setText(response.body().getContent());
                 Picasso.get().load(response.body().getImg()).into(articleImg);
                 article_category.setText(response.body().getCategory());
+                article_date.setText(sdf.format(response.body().getTimestamps()));
 
                 //share
                 share = findViewById(R.id.share);

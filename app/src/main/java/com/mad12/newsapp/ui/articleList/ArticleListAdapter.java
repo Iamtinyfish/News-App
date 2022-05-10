@@ -19,7 +19,8 @@ import org.ocpsoft.prettytime.PrettyTime;
 import java.util.List;
 
 public class ArticleListAdapter extends ArrayAdapter<Article> {
-    PrettyTime p = new PrettyTime();
+    private PrettyTime p = new PrettyTime();
+
     public ArticleListAdapter(@NonNull Context context, @NonNull List<Article> articles) {
         super(context, R.layout.article_item, articles);
     }

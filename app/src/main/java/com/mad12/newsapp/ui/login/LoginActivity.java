@@ -1,0 +1,123 @@
+package com.mad12.newsapp.ui.login;
+
+import static android.content.ContentValues.TAG;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
+import com.mad12.newsapp.MainActivity;
+import com.mad12.newsapp.R;
+import com.mad12.newsapp.databinding.ActivityLoginBinding;
+import com.mad12.newsapp.model.Article;
+import com.mad12.newsapp.model.User;
+import com.mad12.newsapp.ui.articleContent.ArticleContentActivity;
+import com.mad12.newsapp.ui.search.SearchActivity;
+import com.mad12.newsapp.ui.search.SearchListAdapter;
+import com.mad12.newsapp.utils.RetrofitClient;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class LoginActivity extends AppCompatActivity{
+
+    private ActivityLoginBinding binding;
+    EditText username, password;
+    View login;
+    User user = new User();
+    private Button logout;
+    View inflatedView;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        login = findViewById(R.id.login);
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
+
+        username.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                username.setText("");
+            }
+        });
+        password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                password.setText("");
+            }
+        });
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                user = new User(username.getText().toString().trim(), password.getText().toString().trim());
+                checkLogin(user);
+            }
+        });
+
+    }
+
+    //Call API
+    private void checkLogin(User user) {
+        Call<User> call = RetrofitClient.getInstance().getMyApi().checkLogin(user);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(response.body() != null){
+                    user.setFullname(response.body().getFullname());
+                    user.setId(response.body().getId());
+                    user.setUsername(response.body().getUsername());
+                    user.setPassword(response.body().getPassword());
+
+                    final SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putBoolean("Login", true);
+                    editor.putString("Username", user.getUsername());
+                    editor.putString("Password", user.getPassword());
+                    editor.putString("Fullname", user.getFullname());
+                    editor.apply();
+                    finish();
+                    ArticleContentActivity articleContentActivity = new ArticleContentActivity();
+                    articleContentActivity.showToastDown(LoginActivity.this, "Login Success!");
+                    //set text logout
+                    inflatedView = getLayoutInflater().inflate(R.layout.nav_header_main, null);
+                    logout = inflatedView.findViewById(R.id.btnLogout);
+                    logout.setText("Đăng xuất");
+                }
+                else{
+                    Toast.makeText(LoginActivity.this,"Username or password invalid", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(LoginActivity.this,"Username or password invalid", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+}
