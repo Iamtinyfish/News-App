@@ -17,7 +17,7 @@
 
             <EditText
                 android:id="@+id/comment"
-                android:layout_width="300dp"
+                android:layout_width="280dp"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:gravity="left|center"

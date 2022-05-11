@@ -38,6 +38,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         binding = ActivityArticleContentBinding.inflate(getLayoutInflater());
         setContentView(R.layout.search_result);
@@ -76,6 +77,7 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
 
     //Call API
     private void getArticlesByKey(String key) {
+
         Call<List<Article>> call = RetrofitClient.getInstance().getMyApi().getArticlesByKey(key);
         call.enqueue(new Callback<List<Article>>() {
             @Override

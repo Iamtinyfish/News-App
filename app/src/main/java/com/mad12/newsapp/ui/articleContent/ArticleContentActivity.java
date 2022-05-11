@@ -6,22 +6,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +29,14 @@ import com.mad12.newsapp.ui.login.LoginActivity;
 import com.mad12.newsapp.utils.RetrofitClient;
 import com.squareup.picasso.Picasso;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 
 import retrofit2.Call;
@@ -47,9 +48,9 @@ public class ArticleContentActivity extends AppCompatActivity {
     ActivityArticleContentBinding binding;
     private TextView articleTitle, articleContent, title_toolbar, article_category, article_date;
     EditText comment;
-    private ImageView articleImg, share, img_report;
+    private ImageView articleImg, share, img_report, archive;
     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm dd/MM/yyyy");
-    private boolean Login;
+    private boolean Login, check = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +92,7 @@ public class ArticleContentActivity extends AppCompatActivity {
                         }
                         else{
                             System.out.println(comment.getText());
+                            comment.getText().clear();
                         }
                     }
                 });
@@ -103,14 +105,12 @@ public class ArticleContentActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(ArticleContentActivity.this, MainActivity.class);
-//                startActivity(intent);
                 finish();
             }
         });
 
         //get article id from intent
-         Intent intent = this.getIntent();
+        Intent intent = this.getIntent();
         String articleId = null;
         if (intent != null) articleId = intent.getStringExtra("article_id");
         getArticleById(articleId);
@@ -142,7 +142,7 @@ public class ArticleContentActivity extends AppCompatActivity {
         return true;
     }
 
-    //hide keyboard
+    //hide keyboard when touch screen
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -171,17 +171,53 @@ public class ArticleContentActivity extends AppCompatActivity {
                 article_date.setText(sdf.format(response.body().getTimestamps()));
 
                 //share
+                Article article = response.body();
                 share = findViewById(R.id.share);
                 share.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Article article = response.body();
                         Intent share = new Intent(Intent.ACTION_SEND);
                         share.setType("text/plain");
                         share.putExtra(Intent.EXTRA_TEXT, article.getTitle());
                         share.putExtra(Intent.EXTRA_TEXT, article.getImg());
                         share.putExtra(Intent.EXTRA_TEXT, article.getContent());
                         startActivity(Intent.createChooser(share, "Title of the dialog the system will open"));
+                    }
+                });
+
+                //handle archive
+                archive = findViewById(R.id.archive);
+                archive.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        try {
+                            FileOutputStream fOut = openFileOutput("archive.txt", MODE_APPEND);
+                            PrintWriter writer = new PrintWriter( new OutputStreamWriter( fOut ) );
+
+                            FileInputStream fis = openFileInput("archive.txt");
+                            BufferedReader reader = new BufferedReader( new InputStreamReader( fis ) );
+                            String line;
+                            //check duplicate write file
+                            while((line = reader.readLine()) != null){
+                                if(line.equals(article.getId())){
+                                    check = true;
+                                    Toast.makeText(ArticleContentActivity.this,"Tin này đã được lưu", Toast.LENGTH_LONG).show();
+                                    return;
+                                }
+                            }
+                            if(!check){
+                                writer.println(article.getId());
+                                check = false;
+                                Toast.makeText(ArticleContentActivity.this,"Đã lưu tin", Toast.LENGTH_LONG).show();
+                            }
+
+                            writer.close();
+                            reader.close();
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             }
