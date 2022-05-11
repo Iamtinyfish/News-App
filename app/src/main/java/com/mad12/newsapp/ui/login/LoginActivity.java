@@ -1,5 +1,6 @@
 package com.mad12.newsapp.ui.login;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -13,6 +14,7 @@ import com.mad12.newsapp.R;
 import com.mad12.newsapp.databinding.ActivityLoginBinding;
 import com.mad12.newsapp.model.User;
 import com.mad12.newsapp.ui.articleContent.ArticleContentActivity;
+import com.mad12.newsapp.ui.register.RegisterActivity;
 import com.mad12.newsapp.utils.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,7 +24,7 @@ public class LoginActivity extends AppCompatActivity{
 
     private ActivityLoginBinding binding;
     EditText username, password;
-    View login, inflatedView;
+    View login, inflatedView, btnRegister;
     User user = new User();
     private Button logout;
 
@@ -33,10 +35,12 @@ public class LoginActivity extends AppCompatActivity{
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        btnRegister = findViewById(R.id.btnRegister);
         login = findViewById(R.id.login);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
 
+        //handle login
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,6 +49,14 @@ public class LoginActivity extends AppCompatActivity{
             }
         });
 
+        //registerBtn click
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     //Call API

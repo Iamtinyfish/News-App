@@ -15,25 +15,12 @@
         android:layout_marginEnd="68dp"
         android:layout_marginBottom="180dp"
         android:background="@drawable/ellipse_1"
-        app:layout_constraintBottom_toTopOf="@+id/username"
+        app:layout_constraintBottom_toTopOf="@+id/username1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.759"
-        tools:ignore="MissingConstraints" />
-
-    <View
-        android:id="@+id/ellipse_2"
-        android:layout_width="411dp"
-        android:layout_height="216dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/ellipse_2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_button"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -56,7 +43,7 @@
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/username1"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -71,7 +58,7 @@
         tools:ignore="MissingConstraints,TouchTargetSizeCheck"/>
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/password1"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -84,12 +71,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username"
+        app:layout_constraintTop_toBottomOf="@+id/username1"
         tools:ignore="MissingConstraints"/>
-
     <TextView
         android:id="@+id/ng_nh_p"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="52dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
@@ -98,28 +84,14 @@
         android:layout_marginBottom="31dp"
         android:gravity="top"
         android:lineSpacingExtra="5sp"
-        android:text="Đăng nhập"
+        android:text="Đăng ký"
         android:textColor="#55ACEE"
         android:textSize="40sp"
         android:textStyle="bold"
         android:translationY="-2.56sp"
-        app:layout_constraintBottom_toTopOf="@+id/sign_in_button"
         app:layout_constraintEnd_toStartOf="@+id/frame_1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/btnRegister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="48dp"
-        android:text="Đăng ký"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ellipse_2"
+        app:layout_constraintTop_toBottomOf="@+id/password1"
         tools:ignore="MissingConstraints" />
 
     <RelativeLayout
@@ -128,34 +100,35 @@
         android:layout_height="80dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="23dp"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="37dp"
         android:layout_marginEnd="68dp"
         android:background="@drawable/frame_1"
         android:clipToOutline="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ng_nh_p"
-        app:layout_constraintTop_toBottomOf="@+id/password"
+        app:layout_constraintTop_toBottomOf="@+id/password1"
         tools:ignore="MissingConstraints">
 
         <View
-            android:id="@+id/login"
+            android:id="@+id/register"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/ic_baseline_arrow_forward_ios_24"
             tools:ignore="MissingConstraints" />
-
     </RelativeLayout>
 
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/sign_in_button"
-        android:layout_width="200dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="144dp"
+    <View
+        android:id="@+id/ellipse_2"
+        android:layout_width="411dp"
+        android:layout_height="216dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="77dp"
+        android:background="@drawable/ellipse_2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ng_nh_p"
+        app:layout_constraintTop_toBottomOf="@+id/frame_1"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

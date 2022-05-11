@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,15 +20,22 @@
             android:paddingLeft="2dp"
             android:layout_gravity="center"/>
 
+        <TextView
+            android:id="@+id/deleteBookmark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Xoá hết"
+            android:paddingRight="10dp"
+            android:layout_gravity="right"/>
+
     </androidx.appcompat.widget.Toolbar>
 
     <ListView
         android:id="@+id/listArticleSaved"
-        android:layout_marginTop="45dip"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:scrollbars="vertical" >
-
+        android:layout_marginTop="45dip"
+        android:scrollbars="vertical">
     </ListView>
 
 </RelativeLayout>

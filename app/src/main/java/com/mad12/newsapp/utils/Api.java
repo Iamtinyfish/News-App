@@ -34,4 +34,8 @@ public interface Api {
 
     @POST("login")
     Call<User> checkLogin(@Body User user);
+
+    @POST("register")
+    Call<String> register(@Body User user);
+
 }

@@ -100,7 +100,6 @@ public class SearchActivity extends AppCompatActivity implements SearchView.OnQu
                             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                                 Intent intent = new Intent(SearchActivity.this, ArticleContentActivity.class);
                                 intent.putExtra("article_id", response.body().get(position).getId());
-
                                 startActivity(intent);
                             }
                         });

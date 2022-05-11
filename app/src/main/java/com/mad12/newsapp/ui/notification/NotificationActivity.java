@@ -14,7 +14,6 @@ import com.mad12.newsapp.ui.articleContent.ArticleContentActivity;
 
 public class NotificationActivity extends AppCompatActivity {
 
-    TextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
